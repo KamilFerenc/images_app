@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-from pathlib import Path
+from pathlib import Path, PurePath
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
-    'images_app.accounts'
+    'images_app.accounts',
+    'images_app.images'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+PROJECT_DIR = PurePath(__file__).parents[2]
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = PROJECT_DIR.joinpath('media')
+MEDIA_URL = '/media/'
+
+# TESTS
+TEST_RUNNER = 'images_app.utils.testrunner.CustomDiscoverRunner'
 
 # DRF settings
 REST_FRAMEWORK = {
@@ -136,3 +146,18 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
 }
+
+PREFIX_200_PX = '200_px_'
+# max height should be 200 px, it is required to keep ratio - width doesn't have matter
+SIZE_200_PX = (100000, 200)
+PREFIX_400_PX = '400_px_'
+# max height should be 200 px, it is required to keep ratio - width doesn't have matter
+SIZE_400_PX = (100000, 400)
+
+# Thumbnails settings
+DEFAULT_THUMBNAILS_SETTINGS = [
+        {'prefix': PREFIX_200_PX,
+         'size': SIZE_200_PX},
+        {'prefix': PREFIX_400_PX,
+         'size': SIZE_400_PX}
+    ]
