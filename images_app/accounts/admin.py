@@ -6,6 +6,7 @@ from images_app.accounts.models import CustomUser, AccountTier
 
 
 class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'account_tier',)
     fieldsets = (
         (None, {'fields': ('username', 'password', 'account_tier')}),
         (_('Personal info'), {'classes': ('collapse',), 'fields': ('first_name', 'last_name', 'email')}),
@@ -19,7 +20,7 @@ admin.site.register(CustomUser, CustomUserAdmin)
 
 
 class AccountTierAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'original_image', 'generate_temp_link',)
 
 
 admin.site.register(AccountTier, AccountTierAdmin)

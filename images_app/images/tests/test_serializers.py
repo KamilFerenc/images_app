@@ -1,8 +1,8 @@
 from urllib.parse import urljoin
 
 from django.conf import settings
-from django.test import TestCase
 from django.test import RequestFactory
+from django.test import TestCase
 
 from images_app.accounts.factories import CustomUserFactory
 from images_app.images.factories import UserImageFactory, TemporaryImageLinkFactory

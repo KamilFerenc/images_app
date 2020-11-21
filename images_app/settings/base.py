@@ -154,20 +154,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
-
-PREFIX_200_PX = '200_px_'
-# max height should be 200 px, it is required to keep ratio - width doesn't have matter
-SIZE_200_PX = (100000, 200)
-PREFIX_400_PX = '400_px_'
-# max height should be 200 px, it is required to keep ratio - width doesn't have matter
-SIZE_400_PX = (100000, 400)
-# original image doesn't have prefix
-ORIGINAL = ''
-
-# thumbnails settings
-DEFAULT_THUMBNAILS_SETTINGS = [
-        {'prefix': PREFIX_200_PX,
-         'size': SIZE_200_PX},
-        {'prefix': PREFIX_400_PX,
-         'size': SIZE_400_PX}
-    ]

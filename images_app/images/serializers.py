@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework import serializers
 
-from images_app.accounts.models import ACCOUNT_TIER_RETURNED_IMAGES, ORIGINAL_IMAGE_DISPlAY_NAME
+from images_app.accounts.models import ORIGINAL_IMAGE_DISPlAY_NAME
 from images_app.images.models import UserImage, TemporaryImageLink
 
 

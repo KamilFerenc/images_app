@@ -1,11 +1,9 @@
 import os
 
 from PIL import Image
-from django.conf import settings
+from django.db.models.signals import post_save
 
 from images_app.images.models import UserImage
-
-from django.db.models.signals import post_save
 
 
 def generate_thumbnails(sender, instance, **kwargs):
