@@ -9,7 +9,7 @@ class AddImageApiViewTest(ViewTestMixin, PrepareAccountTierMixin, TestCase):
     def setUp(self) -> None:
         self.premium_tier = self.create_premium_tier()
         self.user = CustomUserFactory(account_tier=self.premium_tier)
-        self.image = self.crete_image()
+        self.image = self.create_image()
         self.url = reverse('add_image')
 
     def test_create_user_image(self):

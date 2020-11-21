@@ -3,15 +3,18 @@ import os
 from django.conf import settings
 from django.test import TestCase
 
+from images_app.accounts.factories import CustomUserFactory
 from images_app.images.factories import UserImageFactory
 from images_app.images.signals import generate_thumbnails  # it is required to initialize signals
+from images_app.utils.mixins import PrepareAccountTierMixin
 
 
-class GenerateThumbnailsTest(TestCase):
+class GenerateThumbnailsTest(TestCase, PrepareAccountTierMixin):
     def test_generate_thumbnails(self):
         file_name = 'test_img.jpg'
         # instance is created signal is executed
-        user_image = UserImageFactory(image__witdh=1600, image__height=800, image__filename=file_name)
+        user = CustomUserFactory(account_tier=self.create_premium_tier())
+        user_image = UserImageFactory(image__witdh=1600, image__height=800, image__filename=file_name, user=user)
         base_dir = os.path.dirname(user_image.image.path)
         for thumbnail_setting in settings.DEFAULT_THUMBNAILS_SETTINGS:
             file_path = os.path.join(base_dir, thumbnail_setting['prefix'] + file_name)

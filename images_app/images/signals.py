@@ -10,6 +10,8 @@ from django.db.models.signals import post_save
 
 def generate_thumbnails(sender, instance, **kwargs):
     user = instance.user
+    if not user.account_tier:
+        return
     original_image = instance.image
     dir_name = os.path.dirname(original_image.path)
     file_name = os.path.basename(original_image.name)
