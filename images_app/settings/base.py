@@ -138,6 +138,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = PROJECT_DIR.joinpath('media')
 MEDIA_URL = '/media/'
 
+BASE_URL = 'http://127.0.0.1:8000'
+
 # TESTS
 TEST_RUNNER = 'images_app.utils.testrunner.CustomDiscoverRunner'
 
@@ -159,8 +161,10 @@ SIZE_200_PX = (100000, 200)
 PREFIX_400_PX = '400_px_'
 # max height should be 200 px, it is required to keep ratio - width doesn't have matter
 SIZE_400_PX = (100000, 400)
+# original image doesn't have prefix
+ORIGINAL = ''
 
-# Thumbnails settings
+# thumbnails settings
 DEFAULT_THUMBNAILS_SETTINGS = [
         {'prefix': PREFIX_200_PX,
          'size': SIZE_200_PX},

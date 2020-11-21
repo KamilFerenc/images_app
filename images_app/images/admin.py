@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from images_app.images.models import UserImage
+from images_app.images.models import UserImage, TemporaryImageLink
 
 
 class UserImageAdmin(admin.ModelAdmin):
@@ -8,3 +8,10 @@ class UserImageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserImage, UserImageAdmin)
+
+
+class TemporaryImageLinkAdmin(admin.ModelAdmin):
+    readonly_fields = ('expire_at', 'created', 'image', 'time_expiration')
+
+
+admin.site.register(TemporaryImageLink, TemporaryImageLinkAdmin)

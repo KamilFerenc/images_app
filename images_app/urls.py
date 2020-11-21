@@ -19,6 +19,8 @@ from django.conf import settings
 from django.conf.urls import url, include
 
 api_urls = [
+    url(r'users/', include('images_app.accounts.urls')),
+    url(r'images/', include('images_app.images.urls')),
 ]
 
 urlpatterns = [

@@ -2,8 +2,7 @@ from django.apps import AppConfig
 
 
 class ImagesConfig(AppConfig):
-    name = 'images'
+    name = 'images_app.images'
 
     def ready(self):
-        # noinspection PyUnresolvedReferences
-        from . import signals
+        from images_app.images import signals
