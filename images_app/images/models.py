@@ -30,3 +30,16 @@ class TemporaryImageLink(models.Model):
     expire_at = models.DateTimeField(verbose_name=_('Expire at'), blank=True, null=True)
     user_image = models.ForeignKey('UserImage', verbose_name=_('User image'), on_delete=models.CASCADE)
     created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True)
+
+
+class ThumbnailSettings(models.Model):
+    thumbnail_height = models.PositiveIntegerField(verbose_name=_('Thumbnail height'), unique=True)
+    thumbnail_prefix = models.CharField(verbose_name=_('Thumbnail prefix'), unique=True, max_length=10,
+                                        help_text=_('Thumbnail file name will be start for this prefix'))
+    display_name = models.CharField(
+        verbose_name=_('Display name'), blank=True, max_length=20,
+        help_text=_('Value used as a key value in response in order to recognize thumbnail')
+    )
+
+    def __str__(self):
+        return f'Thumbnail height {self.thumbnail_height} px'

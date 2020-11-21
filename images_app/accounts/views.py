@@ -12,4 +12,3 @@ class UserDetailApiView(RetrieveAPIView):
 
 
 user_detail_api_view = UserDetailApiView.as_view()
-

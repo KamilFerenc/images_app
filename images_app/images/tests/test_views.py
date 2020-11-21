@@ -2,13 +2,13 @@ from django.test import TestCase
 from django.urls import reverse
 
 from images_app.accounts.factories import CustomUserFactory
-from images_app.accounts.models import PREMIUM
-from images_app.utils.mixins import ViewTestMixin
+from images_app.utils.mixins import ViewTestMixin, PrepareAccountTierMixin
 
 
-class AddImageApiViewTest(ViewTestMixin, TestCase):
+class AddImageApiViewTest(ViewTestMixin, PrepareAccountTierMixin, TestCase):
     def setUp(self) -> None:
-        self.user = CustomUserFactory(account_tier=PREMIUM)
+        self.premium_tier = self.crate_premium_tier()
+        self.user = CustomUserFactory(account_tier=self.premium_tier)
         self.image = self.crete_image()
         self.url = reverse('add_image')
 

@@ -34,4 +34,3 @@ class TemporaryImageApiView(RetrieveAPIView):
 
 
 temporary_image_view = TemporaryImageApiView.as_view()
-

@@ -4,7 +4,7 @@ import factory
 from factory import fuzzy
 
 from images_app.accounts.factories import CustomUserFactory
-from images_app.images.models import UserImage, TemporaryImageLink
+from images_app.images.models import UserImage, TemporaryImageLink, ThumbnailSettings
 
 
 class UserImageFactory(factory.django.DjangoModelFactory):
@@ -22,3 +22,11 @@ class TemporaryImageLinkFactory(factory.django.DjangoModelFactory):
     link_suffix = str(uuid.uuid4())
     user_image = factory.SubFactory(UserImageFactory)
     time_expiration = fuzzy.FuzzyInteger(300, 30000)
+
+
+class ThumbnailSettingsFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ThumbnailSettings
+    thumbnail_height = fuzzy.FuzzyInteger(200, 800)
+    thumbnail_prefix = factory.Sequence(lambda n: f'{n}_px_')
+    display_name = factory.Sequence(lambda n: f'{n} px')

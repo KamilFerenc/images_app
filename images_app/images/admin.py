@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from images_app.images.models import UserImage, TemporaryImageLink
+from images_app.images.models import UserImage, TemporaryImageLink, ThumbnailSettings
 
 
 class UserImageAdmin(admin.ModelAdmin):
@@ -15,3 +15,10 @@ class TemporaryImageLinkAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TemporaryImageLink, TemporaryImageLinkAdmin)
+
+
+class ThumbnailSettingsAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(ThumbnailSettings, ThumbnailSettingsAdmin)
