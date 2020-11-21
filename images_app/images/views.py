@@ -29,8 +29,9 @@ generate_temporary_link = GenerateTemporaryLinkApiView.as_view()
 class TemporaryImageApiView(RetrieveAPIView):
     serializer_class = TemporaryImageSerializer
     permission_classes = [AllowAny]
-    queryset = TemporaryImageLink.objects.filter(expire_at__gte=timezone.now())
     lookup_field = 'link_suffix'
 
+    def get_queryset(self):
+        return TemporaryImageLink.objects.filter(expire_at__gte=timezone.now())
 
 temporary_image_view = TemporaryImageApiView.as_view()

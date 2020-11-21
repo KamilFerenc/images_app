@@ -3,7 +3,7 @@ import os
 from django.test import TestCase
 from django.utils import timezone
 
-from images_app.images.factories import UserImageFactory
+from images_app.images.factories import UserImageFactory, ThumbnailSettingsFactory
 from images_app.images.models import image_upload_to
 
 
@@ -16,3 +16,9 @@ class ImageUploadToTest(TestCase):
         expected_result = os.path.join('userdata', 'images', 'user', str(user_image.user.pk), f'{today.strftime("%Y")}',
                                        f'{today.strftime("%m")}', f'{today.strftime("%d")}', filename)
         self.assertEqual(expected_result, result)
+
+
+class ThumbnailSettingsTest(TestCase):
+    def test__str__(self):
+        th_settings = ThumbnailSettingsFactory()
+        self.assertEqual(f'Thumbnail height {th_settings.thumbnail_height} px', str(th_settings))

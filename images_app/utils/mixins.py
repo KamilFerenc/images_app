@@ -12,8 +12,8 @@ class ViewTestMixin:
         self.assertTrue(value)
 
     @staticmethod
-    def create_image():
-        tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+    def create_image(suffix: str = '.jpg'):
+        tmp_file = tempfile.NamedTemporaryFile(suffix=suffix)
         image = Image.new('RGB', (600, 600), )
         image.save(tmp_file.name, 'jpeg')
         return tmp_file

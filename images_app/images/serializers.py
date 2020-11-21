@@ -3,15 +3,17 @@ import uuid
 from urllib.parse import urljoin
 
 from django.conf import settings
+from django.core.validators import FileExtensionValidator
 from django.utils import timezone
 from rest_framework import serializers
 
 from images_app.accounts.models import ORIGINAL_IMAGE_DISPlAY_NAME
-from images_app.images.models import UserImage, TemporaryImageLink
+from images_app.images.models import UserImage, TemporaryImageLink, IMAGE_ALLOWED_EXTENSION
 
 
 class UserImageSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(write_only=True)
+    image = serializers.ImageField(write_only=True,
+                                   validators=[FileExtensionValidator(allowed_extensions=IMAGE_ALLOWED_EXTENSION)])
     images = serializers.SerializerMethodField()
 
     class Meta:
@@ -44,7 +46,7 @@ class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
 class TemporaryImageLinkSerializer(serializers.ModelSerializer):
     link = serializers.SerializerMethodField()
     user_image = UserFilteredPrimaryKeyRelatedField(queryset=UserImage.objects.all())
-    time_expiration = serializers.IntegerField(write_only=True, min_value=1, max_value=30000)
+    time_expiration = serializers.IntegerField(write_only=True, min_value=300, max_value=30000)
 
     class Meta:
         model = TemporaryImageLink
