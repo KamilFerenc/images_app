@@ -7,7 +7,7 @@ from images_app.utils.mixins import ViewTestMixin, PrepareAccountTierMixin
 
 class AddImageApiViewTest(ViewTestMixin, PrepareAccountTierMixin, TestCase):
     def setUp(self) -> None:
-        self.premium_tier = self.crate_premium_tier()
+        self.premium_tier = self.create_premium_tier()
         self.user = CustomUserFactory(account_tier=self.premium_tier)
         self.image = self.crete_image()
         self.url = reverse('add_image')

@@ -19,6 +19,8 @@ ACCOUNT_TIER_RETURNED_IMAGES = {
     ENTERPRISE: [settings.PREFIX_200_PX, settings.PREFIX_400_PX, settings.ORIGINAL]
 }
 
+ORIGINAL_IMAGE_DISPlAY_NAME = 'Original'
+
 
 class CustomUser(AbstractUser):
     account_tier = models.ForeignKey('AccountTier', verbose_name=_('Account tier'), null=True,

@@ -2,7 +2,7 @@ from django.utils import timezone
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from images_app.accounts.permissions import IsOwner
+from images_app.accounts.permissions import HasGenerateLinkPermission
 from images_app.images.models import TemporaryImageLink
 from images_app.images.serializers import UserImageSerializer, TemporaryImageLinkSerializer, TemporaryImageSerializer
 
@@ -20,7 +20,7 @@ add_image_api_view = AddImageApiView.as_view()
 
 class GenerateTemporaryLinkApiView(CreateAPIView):
     serializer_class = TemporaryImageLinkSerializer
-    permission_classes = [IsOwner]
+    permission_classes = [HasGenerateLinkPermission]
 
 
 generate_temporary_link = GenerateTemporaryLinkApiView.as_view()

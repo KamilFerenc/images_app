@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework import serializers
 
-from images_app.accounts.models import ACCOUNT_TIER_RETURNED_IMAGES
+from images_app.accounts.models import ACCOUNT_TIER_RETURNED_IMAGES, ORIGINAL_IMAGE_DISPlAY_NAME
 from images_app.images.models import UserImage, TemporaryImageLink
 
 
@@ -23,10 +23,12 @@ class UserImageSerializer(serializers.ModelSerializer):
         image_links = []
         dir_name = os.path.dirname(obj.image.name)
         file_name = os.path.basename(obj.image.name)
-        for image_prefix in ACCOUNT_TIER_RETURNED_IMAGES[request.user.account_tier]:
-            thumb_file_name = os.path.join(dir_name, image_prefix + file_name)
-            image_url = request.build_absolute_uri(urljoin(settings.MEDIA_URL, thumb_file_name))
-            image_links.append({image_prefix: image_url})
+        for thumbnail in request.user.account_tier.thumbnails.all():
+            thumbnail_file_name = os.path.join(dir_name, thumbnail.thumbnail_prefix + file_name)
+            image_url = request.build_absolute_uri(urljoin(settings.MEDIA_URL, thumbnail_file_name))
+            image_links.append({thumbnail.display_name: image_url})
+        if request.user.account_tier.original_image:
+            image_links.append({ORIGINAL_IMAGE_DISPlAY_NAME: request.build_absolute_uri(obj.image.url)})
         return image_links
 
 
