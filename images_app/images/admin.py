@@ -11,7 +11,7 @@ admin.site.register(UserImage, UserImageAdmin)
 
 
 class TemporaryImageLinkAdmin(admin.ModelAdmin):
-    readonly_fields = ('expire_at', 'created', 'image', 'time_expiration')
+    readonly_fields = ('expire_at', 'created', 'user_image', 'time_expiration')
 
 
 admin.site.register(TemporaryImageLink, TemporaryImageLinkAdmin)

@@ -21,8 +21,8 @@ class Migration(migrations.Migration):
                                 django.core.validators.MaxValueValidator(30000)], verbose_name='Time expiration')),
                 ('expire_at', models.DateTimeField(blank=True, null=True, verbose_name='Expire at')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('image', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='images.userimage',
-                                            verbose_name='Image')),
+                ('user_image', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='images.userimage',
+                                                 verbose_name='User image')),
             ],
         ),
     ]

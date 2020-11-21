@@ -28,5 +28,5 @@ class TemporaryImageLink(models.Model):
     time_expiration = models.PositiveIntegerField(verbose_name=_('Time expiration'),
                                                   validators=[MinValueValidator(300), MaxValueValidator(30000)])
     expire_at = models.DateTimeField(verbose_name=_('Expire at'), blank=True, null=True)
-    image = models.ForeignKey('UserImage', verbose_name=_('Image'), on_delete=models.CASCADE)
+    user_image = models.ForeignKey('UserImage', verbose_name=_('User image'), on_delete=models.CASCADE)
     created = models.DateTimeField(verbose_name=_('Created'), auto_now_add=True)

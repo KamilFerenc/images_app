@@ -1,13 +1,13 @@
 from rest_framework.generics import RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
 
 from images_app.accounts.models import CustomUser
+from images_app.accounts.permissions import IsOwner
 from images_app.accounts.serializers import CustomUserSerializer
 
 
 class UserDetailApiView(RetrieveAPIView):
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsOwner]
     queryset = CustomUser.objects.all()
 
 

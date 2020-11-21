@@ -41,12 +41,12 @@ class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
 
 class TemporaryImageLinkSerializer(serializers.ModelSerializer):
     link = serializers.SerializerMethodField()
-    image = UserFilteredPrimaryKeyRelatedField(queryset=UserImage.objects.all())
+    user_image = UserFilteredPrimaryKeyRelatedField(queryset=UserImage.objects.all())
     time_expiration = serializers.IntegerField(write_only=True, min_value=1, max_value=30000)
 
     class Meta:
         model = TemporaryImageLink
-        fields = ('image', 'time_expiration', 'expire_at', 'link')
+        fields = ('user_image', 'time_expiration', 'expire_at', 'link')
         read_only_fields = ('expire_at', 'link')
 
     def get_link(self, obj):
@@ -71,5 +71,4 @@ class TemporaryImageSerializer(serializers.ModelSerializer):
         lookup_field = 'link_suffix'
 
     def get_image(self, obj):
-        request = self.context.get('request')
-        return request.build_absolute_uri(obj.image.image.url)
+        return urljoin(settings.BASE_URL, obj.user_image.image.url)
