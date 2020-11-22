@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.conf import settings
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from images_app.accounts.factories import CustomUserFactory
@@ -28,3 +29,34 @@ class UserDetailApiViewTest(PrepareAccountTierMixin, ViewTestMixin, TestCase):
         self.assertEqual(len(data['images']), self.user.images.count())
         self.assertEqual(data['images'][0]['id'], self.user_image_1.pk)
         self.assertEqual(data['images'][1]['id'], self.user_image_2.pk)
+
+    @override_settings(CACHES={
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'cache:11211',
+            'TIMEOUT': 1 * settings.DAY
+        }
+    })
+    def test_cache_activated(self):
+        base_images_quantity = self.user.images.count()
+        self.login(self.user)
+        resp_1 = self.client.get(self.url)
+        data_1 = resp_1.json()
+        self.assertEqual(len(data_1['images']), base_images_quantity)
+        # add UserImage - response should be get from cache
+        self.user_image_3 = UserImageFactory(user=self.user, image__filename='test_3.jpg')
+        resp_2 = self.client.get(self.url)
+        data_2 = resp_2.json()
+        self.assertEqual(data_1, data_2)
+
+    def test_cache_not_activated(self):
+        base_images_quantity = self.user.images.count()
+        self.login(self.user)
+        resp_1 = self.client.get(self.url)
+        data_1 = resp_1.json()
+        self.assertEqual(len(data_1['images']), base_images_quantity)
+        # add UserImage - response should not be get from cache
+        self.user_image_3 = UserImageFactory(user=self.user, image__filename='test_3.jpg')
+        resp_2 = self.client.get(self.url)
+        data_2 = resp_2.json()
+        self.assertNotEqual(data_1, data_2)

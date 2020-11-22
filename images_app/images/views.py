@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.utils import timezone
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -10,6 +11,10 @@ from images_app.images.serializers import UserImageSerializer, TemporaryImageLin
 class AddImageApiView(CreateAPIView):
     serializer_class = UserImageSerializer
     permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        cache.delete(request.user.username)
+        return super().post(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -33,5 +38,6 @@ class TemporaryImageApiView(RetrieveAPIView):
 
     def get_queryset(self):
         return TemporaryImageLink.objects.filter(expire_at__gte=timezone.now())
+
 
 temporary_image_view = TemporaryImageApiView.as_view()

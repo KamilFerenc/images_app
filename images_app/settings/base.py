@@ -154,3 +154,17 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# CACHE
+SECOND = 1
+MINUTE = SECOND * 60
+HOUR = MINUTE * 60
+DAY = HOUR * 24
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'cache:11211',
+        'TIMEOUT': 1 * DAY
+    }
+}
