@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 IMAGE_ALLOWED_EXTENSION = ['jpg', 'png']
 
 
-def image_upload_to(instance, filename):
+def image_upload_to(instance: 'UserImage', filename: str) -> str:
     today = datetime.datetime.today()
     return os.path.join('userdata', 'images', 'user', str(instance.user.pk),  f'{today.strftime("%Y")}',
                         f'{today.strftime("%m")}', f'{today.strftime("%d")}', filename)
@@ -41,5 +41,5 @@ class ThumbnailSettings(models.Model):
         help_text=_('Value used as a key value in response in order to recognize thumbnail')
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Thumbnail height {self.thumbnail_height} px'

@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.request import Request
 from rest_framework.response import Response
 
 from images_app.accounts.models import CustomUser
@@ -12,7 +13,11 @@ class UserDetailApiView(RetrieveAPIView):
     permission_classes = [IsOwner]
     queryset = CustomUser.objects.all()
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request: Request, *args, **kwargs) -> Response:
+        """
+        Cache user detail view, it is not possible use build in cache decorator because cache key has to be username.
+        When new image is uploaded by user cache key is deleted (AddImageApiView).
+        """
         if response := cache.get(request.user.username):
             return Response(*response)
         response = super().get(request, *args, **kwargs)

@@ -1,3 +1,5 @@
+from typing import List
+
 import factory
 
 from images_app.accounts.models import CustomUser, AccountTier
@@ -16,7 +18,7 @@ class AccountTierFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda n: f'Title_{n}')
 
     @factory.post_generation
-    def thumbnails(self, create, extracted, **kwargs):
+    def thumbnails(self, create: bool, extracted: List = None, **kwargs) -> None:
         if not create:
             return
         if extracted:

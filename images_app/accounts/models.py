@@ -20,5 +20,5 @@ class AccountTier(models.Model):
     thumbnails = models.ManyToManyField('images.ThumbnailSettings', verbose_name=_('Thumbnails'),
                                         related_name='account_tiers')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title

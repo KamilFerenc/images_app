@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 from images_app.images.models import UserImage
 
 
-def generate_thumbnails(sender, instance, **kwargs):
+def generate_thumbnails(sender: UserImage, instance: UserImage, **kwargs) -> None:
     user = instance.user
     if not user.account_tier:
         return

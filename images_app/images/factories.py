@@ -1,4 +1,5 @@
 import uuid
+from typing import List
 
 import factory
 from django.utils import timezone
@@ -25,12 +26,11 @@ class TemporaryImageLinkFactory(factory.django.DjangoModelFactory):
     time_expiration = fuzzy.FuzzyInteger(300, 30000)
 
     @factory.post_generation
-    def expire_at(self, create, extracted, **kwargs):
+    def expire_at(self, create: bool, extracted: List = None, **kwargs):
         if not create:
             return
         self.expire_at = timezone.now() + timezone.timedelta(seconds=self.time_expiration)
         self.save()
-
 
 
 class ThumbnailSettingsFactory(factory.django.DjangoModelFactory):

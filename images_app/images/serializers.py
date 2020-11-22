@@ -1,9 +1,11 @@
 import os
 import uuid
+from typing import List, Union, Dict
 from urllib.parse import urljoin
 
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
+from django.db.models import QuerySet
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -20,7 +22,10 @@ class UserImageSerializer(serializers.ModelSerializer):
         model = UserImage
         fields = ('id', 'image', 'images',)
 
-    def get_images(self, obj):
+    def get_images(self, obj: UserImage) -> List:
+        """
+        Get image and generated thumbnails for user based on the AccountTier type.
+        """
         request = self.context.get('request')
         image_links = []
         dir_name = os.path.dirname(obj.image.name)
@@ -35,7 +40,7 @@ class UserImageSerializer(serializers.ModelSerializer):
 
 
 class UserFilteredPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
-    def get_queryset(self):
+    def get_queryset(self) -> Union[QuerySet, None]:
         request = self.context.get('request')
         queryset = super(UserFilteredPrimaryKeyRelatedField, self).get_queryset()
         if not request or not queryset:
@@ -53,12 +58,18 @@ class TemporaryImageLinkSerializer(serializers.ModelSerializer):
         fields = ('user_image', 'time_expiration', 'expire_at', 'link')
         read_only_fields = ('expire_at', 'link')
 
-    def get_link(self, obj):
+    def get_link(self, obj: TemporaryImageLink) -> str:
+        """
+        Return link for the TemporaryImageLink object
+        """
         request = self.context.get('request')
         link_images_app = request.build_absolute_uri().rsplit('/', 2)[0]
         return urljoin(f'{link_images_app}/', obj.link_suffix)
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict[str, Union[int, str]]) -> TemporaryImageLink:
+        """
+        When object is saved generate random value (link_suffix) and set expire_at automatically.
+        """
         link_suffix = str(uuid.uuid4())
         expire_at = timezone.now() + timezone.timedelta(seconds=self.validated_data['time_expiration'])
         return TemporaryImageLink.objects.create(link_suffix=link_suffix,
@@ -74,5 +85,8 @@ class TemporaryImageSerializer(serializers.ModelSerializer):
         fields = ('image',)
         lookup_field = 'link_suffix'
 
-    def get_image(self, obj):
+    def get_image(self, obj: TemporaryImageLink) -> str:
+        """
+        Return link to image for which TemporaryImageLink has been generated.
+        """
         return urljoin(settings.BASE_URL, obj.user_image.image.url)
