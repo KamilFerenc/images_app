@@ -1,0 +1,117 @@
+- model: authtoken.token
+  pk: 282cf8dc7bd985bf28fb548ed65116c1aeff7a11
+  fields:
+    user: 2
+    created: 2020-11-21 19:23:15.721446+00:00
+- model: authtoken.token
+  pk: 63d143fcb2ab4056abe66eafe93698b351083170
+  fields:
+    user: 3
+    created: 2020-11-21 17:30:15.079279+00:00
+- model: authtoken.token
+  pk: 9dfbc9e07dcb57998132f1a830e1da04c08548d5
+  fields:
+    user: 1
+    created: 2020-11-21 17:12:31.199652+00:00
+- model: accounts.customuser
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$216000$uSPq0Rme8jhF$WpcwruPv2xiCGGYUNp0/dsvJNkc2yg3H5tvEOuai06g=
+    last_login: 2020-11-22 11:07:33.575086+00:00
+    is_superuser: true
+    username: admin
+    first_name: ''
+    last_name: ''
+    email: admin@test.com
+    is_staff: true
+    is_active: true
+    date_joined: 2020-11-21 15:34:55.185193+00:00
+    account_tier: 3
+    groups: []
+    user_permissions: []
+- model: accounts.customuser
+  pk: 2
+  fields:
+    password: pbkdf2_sha256$216000$O7YHsehIuzvJ$/3HweRwJDhih1QyRenmD0Y8qEfu/BykZUP2yTCUOOeo=
+    last_login: 2020-11-21 19:23:15.729347+00:00
+    is_superuser: false
+    username: test_basic
+    first_name: ''
+    last_name: ''
+    email: ''
+    is_staff: false
+    is_active: true
+    date_joined: 2020-11-21 15:39:43.658425+00:00
+    account_tier: 1
+    groups: []
+    user_permissions: []
+- model: accounts.customuser
+  pk: 3
+  fields:
+    password: pbkdf2_sha256$216000$rpuEQ8bBkJri$VP+5aOL6aOAwhZsI7RAf0fWQnqHpa6gq2B1hPkIklxA=
+    last_login: null
+    is_superuser: false
+    username: test_premium
+    first_name: ''
+    last_name: ''
+    email: ''
+    is_staff: false
+    is_active: true
+    date_joined: 2020-11-21 15:39:57+00:00
+    account_tier: 2
+    groups: []
+    user_permissions: []
+- model: accounts.customuser
+  pk: 4
+  fields:
+    password: pbkdf2_sha256$216000$7kQhFO99JbMP$ny69DlsbQWXGycLSXVsZslGxKR6vmahcHF8Y+JwOE+k=
+    last_login: null
+    is_superuser: false
+    username: test_enterprise
+    first_name: ''
+    last_name: ''
+    email: ''
+    is_staff: false
+    is_active: true
+    date_joined: 2020-11-21 15:40:14.570434+00:00
+    account_tier: 3
+    groups: []
+    user_permissions: []
+- model: accounts.accounttier
+  pk: 1
+  fields:
+    title: Basic
+    original_image: false
+    generate_temp_link: false
+    thumbnails:
+    - 1
+- model: accounts.accounttier
+  pk: 2
+  fields:
+    title: Premium
+    original_image: true
+    generate_temp_link: false
+    thumbnails:
+    - 1
+    - 2
+- model: accounts.accounttier
+  pk: 3
+  fields:
+    title: Enterprise
+    original_image: true
+    generate_temp_link: true
+    thumbnails:
+    - 1
+    - 2
+- model: images.thumbnailsettings
+  pk: 1
+  fields:
+    thumbnail_height: 200
+    thumbnail_prefix: 200_px_
+    display_name: 200 px
+- model: images.thumbnailsettings
+  pk: 2
+  fields:
+    thumbnail_height: 400
+    thumbnail_prefix: 400_px_
+    display_name: 400 px
