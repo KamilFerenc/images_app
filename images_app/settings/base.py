@@ -155,6 +155,10 @@ REST_FRAMEWORK = {
     ]
 }
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'images_app.accounts.serializers.CustomUserSerializer',
+}
+
 # CACHE
 SECOND = 1
 MINUTE = SECOND * 60

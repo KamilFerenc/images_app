@@ -63,7 +63,7 @@ class TemporaryImageLinkSerializer(serializers.ModelSerializer):
         Return link for the TemporaryImageLink object
         """
         request = self.context.get('request')
-        link_images_app = request.build_absolute_uri().rsplit('/', 2)[0]
+        link_images_app = request.build_absolute_uri().rstrip('/').rsplit('/', 1)[0]
         return urljoin(f'{link_images_app}/', obj.link_suffix)
 
     def create(self, validated_data: Dict[str, Union[int, str]]) -> TemporaryImageLink:

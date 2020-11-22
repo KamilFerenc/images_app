@@ -25,7 +25,7 @@ Base url `http://127.0.0.1:8000/`
 1) `GET api/login/` - login view 
 2) `POST api/logout/` - logout view
 3) `POST api/user/` - basic information about user (if logged) (here you can find user id (pk))
-4) `POST api/users/<id>/` - user detail - returns list of all user images with thumbnails
+4) `POST api/users/<id>/` - user detail - returns list of all user images with thumbnails (cached view)
 5) `POST api/images/add/` - add image
 6) `POST api/images/generate-link/` - generate temporary link for image
 7) `GET api/images/<link_suffix>/` - temporary link which expires after certain time period, in response returns link to original image 
