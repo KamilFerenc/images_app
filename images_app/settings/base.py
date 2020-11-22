@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-from pathlib import Path
+from pathlib import Path, PurePath
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
-    'images_app.accounts'
+    'rest_framework.authtoken',
+    'rest_auth',
+    'images_app.accounts',
+    'images_app.images'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +131,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+PROJECT_DIR = PurePath(__file__).parents[2]
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = PROJECT_DIR.joinpath('media')
+MEDIA_URL = '/media/'
+
+BASE_URL = 'http://127.0.0.1:8000'
+
+# TESTS
+TEST_RUNNER = 'images_app.utils.testrunner.CustomDiscoverRunner'
 
 # DRF settings
 REST_FRAMEWORK = {
@@ -135,4 +149,22 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
+# CACHE
+SECOND = 1
+MINUTE = SECOND * 60
+HOUR = MINUTE * 60
+DAY = HOUR * 24
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'cache:11211',
+        'TIMEOUT': 1 * DAY
+    }
 }

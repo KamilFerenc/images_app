@@ -12,18 +12,27 @@ services:
     stdin_open: true
     tty: true
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
+      - cache
     env_file:
       - .env
     links:
       - db
     restart: always
+
+  cache:
+    image: memcached:1.6.8
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64
 
 volumes:
   pg_data:
